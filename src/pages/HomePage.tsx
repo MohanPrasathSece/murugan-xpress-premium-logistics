@@ -94,11 +94,8 @@ function Nav() {
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "nav-glass py-2" : "bg-transparent py-4"}`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5">
-        <a href="#home" className="flex items-center gap-2.5">
-          <Logo size={40} />
-          <span className="text-lg font-extrabold tracking-tight">
-            Murugan <span className="text-navy">X</span><span className="text-primary">press</span>
-          </span>
+        <a href="#home" className="flex items-center">
+          <Logo size={44} variant="nav" />
         </a>
         <nav className="hidden items-center gap-8 lg:flex">
           {NAV.map((n) => (
@@ -769,9 +766,8 @@ function Footer() {
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary to-red-400" />
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-4">
         <div>
-          <div className="flex items-center gap-2.5">
-            <Logo size={40} />
-            <span className="text-lg font-extrabold">Murugan <span className="text-primary">Xpress</span></span>
+          <div className="flex items-center">
+            <Logo size={44} variant="footer" />
           </div>
           <p className="mt-4 text-sm leading-relaxed text-white/60">Tamil Nadu's trusted logistics partner. Fast, safe, on-time delivery across all 38 districts.</p>
         </div>
