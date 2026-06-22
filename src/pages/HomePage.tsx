@@ -449,9 +449,19 @@ function Pricing() {
                     <tr key={p.v} className={`border-t border-border transition-colors hover:bg-red-50 ${i % 2 ? "bg-slate-50/60" : ""}`}>
                       <td className="px-6 py-5 font-bold">{p.v}</td>
                       <td className="px-6 py-5 text-muted-foreground">{p.cap}</td>
-                      <td className="px-6 py-5 font-extrabold text-primary">{p.min}</td>
-                      <td className="px-6 py-5 text-muted-foreground">{p.km}</td>
-                      <td className="px-6 py-5 font-semibold">{p.extra === "-" ? "-" : `${p.extra}/km`}</td>
+                      {p.min === "-" ? (
+                        <td colSpan={3} className="px-6 py-5 text-right sm:text-left">
+                          <a href={`tel:${PHONE}`} className="inline-flex items-center gap-1.5 rounded-lg bg-orange-100 px-3 py-1.5 text-xs font-bold text-orange-700 transition hover:bg-orange-200">
+                            <Phone className="h-3.5 w-3.5" /> Call for Price
+                          </a>
+                        </td>
+                      ) : (
+                        <>
+                          <td className="px-6 py-5 font-extrabold text-primary">{p.min}</td>
+                          <td className="px-6 py-5 text-muted-foreground">{p.km}</td>
+                          <td className="px-6 py-5 font-semibold">{p.extra === "-" ? "-" : `${p.extra}/km`}</td>
+                        </>
+                      )}
                     </tr>
                   ))}
                 </tbody>
