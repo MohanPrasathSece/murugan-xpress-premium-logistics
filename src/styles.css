@@ -1,0 +1,240 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-surface: var(--surface);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 4px 24px -8px rgb(15 23 42 / 0.18);
+  --shadow-glow: 0 12px 40px -10px rgb(220 38 38 / 0.35);
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 32px -12px rgb(15 23 42 / 0.10);
+}
+
+:root {
+  --radius: 1.25rem;
+
+  /* White background */
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --surface: #eef2fb;  /* light navy tint for alternate sections */
+
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+
+  /* Primary = Red #DC2626 */
+  --primary: #dc2626;
+  --primary-foreground: #ffffff;
+
+  /* Secondary = light navy tint for backgrounds */
+  --secondary: #f0f4ff;
+  --secondary-foreground: #1e3a8a;
+
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #eff6ff;
+  --accent-foreground: #1e3a8a;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #dc2626;
+
+  /* Navy tokens */
+  --navy: #1e3a8a;
+  --navy-deep: #0f1f4a;
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: #dc262640; }
+}
+
+/* ─── Utilities ─────────────────────────────────────────────────────────── */
+
+@utility blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+@utility glass {
+  background: color-mix(in srgb, white 72%, transparent);
+  backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid color-mix(in srgb, white 55%, transparent);
+}
+
+@utility nav-glass {
+  background: color-mix(in srgb, white 85%, transparent);
+  backdrop-filter: blur(18px) saturate(160%);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 1px 12px -4px rgb(15 23 42 / 0.08);
+}
+
+/* Red → Navy gradient text */
+@utility text-gradient-brand {
+  background: linear-gradient(120deg, #dc2626 0%, #1e3a8a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility btn-primary {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 24px -8px rgb(220 38 38 / 0.45);
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  &:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 12px 32px -8px rgb(220 38 38 / 0.55); }
+  &:active { transform: translateY(0); }
+}
+
+@utility btn-ghost {
+  background: white;
+  color: var(--color-foreground);
+  border: 1.5px solid var(--color-border);
+  transition: all .2s ease;
+  &:hover { border-color: var(--color-navy); color: var(--color-navy); }
+}
+
+@utility card-soft {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  &:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -16px rgb(220 38 38 / 0.20); border-color: color-mix(in srgb, var(--color-primary) 25%, var(--color-border)); }
+}
+
+@utility section-pad {
+  padding-block: 6rem;
+  @media (max-width: 768px) { padding-block: 4rem; }
+}
+
+/* Scroll-reveal */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1);
+  &.in-view { opacity: 1; transform: translateY(0); }
+}
+
+/* Navy section band (used for stats bar, booking header, etc.) */
+@utility navy-band {
+  background: linear-gradient(135deg, #1e3a8a 0%, #0f1f4a 100%);
+  color: #ffffff;
+}
+
+/* Navy soft background for icon containers */
+@utility icon-navy {
+  background: rgb(30 58 138 / 0.10);
+  color: #1e3a8a;
+}
+
+/* Input focus style with navy ring option */
+@utility input-field {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1.5px solid var(--color-border);
+  background: white;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  &:focus { border-color: #1e3a8a; box-shadow: 0 0 0 3px rgb(30 58 138 / 0.12); }
+}
+
+/* Animated brand underline */
+@utility underline-brand {
+  position: relative;
+  white-space: nowrap;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0.06em;
+    height: 0.26em;
+    background: linear-gradient(90deg, #dc2626, #1e3a8a);
+    border-radius: 999px;
+    transform-origin: left;
+    animation: underline-grow 1s .4s cubic-bezier(.22,.61,.36,1) both;
+    z-index: -1;
+    opacity: .3;
+  }
+}
+
+/* Floating badge */
+@utility animate-float { animation: float-y 6s ease-in-out infinite; }
+
+/* Animated blob background */
+@utility animate-blob { animation: blob-drift 18s ease-in-out infinite; }
+
+/* Scroll indicator */
+@utility animate-scroll-hint { animation: scroll-hint 1.6s ease-in-out infinite; }
+
+/* ─── Keyframes ─────────────────────────────────────────────────────────── */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes blob-drift {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(28px,-18px) scale(1.05); }
+  66% { transform: translate(-18px,18px) scale(0.97); }
+}
+
+@keyframes underline-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes scroll-hint {
+  0% { transform: translateY(0); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translateY(14px); opacity: 0; }
+}
