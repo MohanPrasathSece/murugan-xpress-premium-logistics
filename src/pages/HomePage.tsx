@@ -292,12 +292,12 @@ function About() {
 
 /* ---------- SERVICES ---------- */
 const SERVICES = [
-  { icon: Bike, name: "Bike Delivery", cap: "Up to 20 kg", desc: "Quick documents, parcels & food across the city.", price: "₹60" },
-  { icon: Truck, name: "Goods Auto", cap: "Up to 100 kg", desc: "Small loads, shop deliveries & light cargo.", price: "₹120" },
-  { icon: Truck, name: "Load Auto", cap: "Up to 500 kg", desc: "Medium loads, appliances & business stock.", price: "₹250" },
-  { icon: Truck, name: "Tempo", cap: "Up to 750 kg", desc: "Mid-size furniture, mini moves & commercial.", price: "₹350" },
-  { icon: Truck, name: "Mini Van", cap: "Up to 1 Ton", desc: "Household shifting & retail distribution.", price: "₹450" },
-  { icon: Truck, name: "Lorry", cap: "Up to 3 Ton", desc: "Heavy cargo, industrial loads & long-haul.", price: "₹900" },
+  { icon: Bike, name: "Bike Delivery", cap: "Up to 20 kg", desc: "Quick documents, parcels & food across the city.", price: "₹70 - ₹80" },
+  { icon: Truck, name: "Goods Auto", cap: "Up to 100 kg", desc: "Small loads, shop deliveries & light cargo.", price: "₹150" },
+  { icon: Truck, name: "Load Auto", cap: "Up to 500 kg", desc: "Medium loads, appliances & business stock.", price: "₹350" },
+  { icon: Truck, name: "Tempo", cap: "Up to 750 kg", desc: "Mid-size furniture, mini moves & commercial.", price: "" },
+  { icon: Truck, name: "Mini Van", cap: "Up to 1 Ton", desc: "Household shifting & retail distribution.", price: "" },
+  { icon: Truck, name: "Lorry", cap: "Up to 3 Ton", desc: "Heavy cargo, industrial loads & long-haul.", price: "" },
 ];
 
 function ServiceCard({ icon: Icon, name, cap, desc, price, delay }: { icon: React.ElementType; name: string; cap: string; desc: string; price: string; delay: number }) {
@@ -309,7 +309,7 @@ function ServiceCard({ icon: Icon, name, cap, desc, price, delay }: { icon: Reac
         <span className="grid h-14 w-14 place-items-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
           <Icon className="h-7 w-7" strokeWidth={2.2} />
         </span>
-        <span className="rounded-full bg-navy/10 px-3 py-1 text-xs font-semibold text-navy">From {price}</span>
+        {price && <span className="rounded-full bg-navy/10 px-3 py-1 text-xs font-semibold text-navy">From {price}</span>}
       </div>
       <h3 className="mt-5 text-xl font-bold">{name}</h3>
       <div className="mt-1 text-sm font-semibold text-primary">{cap}</div>
@@ -373,12 +373,12 @@ function Categories() {
 
 /* ---------- PRICING ---------- */
 const PRICING = [
-  { v: "Bike", cap: "20 kg", min: "₹60", km: "5 KM", extra: "₹9" },
-  { v: "Passenger Auto", cap: "100 kg", min: "₹120", km: "5 KM", extra: "₹12" },
-  { v: "Load Auto", cap: "500 kg", min: "₹250", km: "8 KM", extra: "₹15" },
-  { v: "Tempo", cap: "750 kg", min: "₹350", km: "10 KM", extra: "₹17" },
-  { v: "Mini Van", cap: "1000 kg", min: "₹450", km: "12 KM", extra: "₹18" },
-  { v: "Lorry", cap: "3000 kg", min: "₹900", km: "20 KM", extra: "₹28" },
+  { v: "Bike", cap: "20 kg", min: "₹70 - ₹80", km: "5 KM", extra: "₹9" },
+  { v: "Passenger Auto", cap: "100 kg", min: "₹150", km: "5 KM", extra: "₹12" },
+  { v: "Load Auto", cap: "500 kg", min: "₹350", km: "8 KM", extra: "₹15" },
+  { v: "Tempo", cap: "750 kg", min: "-", km: "-", extra: "-" },
+  { v: "Mini Van", cap: "1000 kg", min: "-", km: "-", extra: "-" },
+  { v: "Lorry", cap: "3000 kg", min: "-", km: "-", extra: "-" },
 ];
 
 function Pricing() {
@@ -396,24 +396,37 @@ function Pricing() {
           <div className="grid gap-4 md:hidden">
             {PRICING.map((p, i) => (
               <div key={p.v} className="rounded-2xl border border-border bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
-                <div className="flex items-center justify-between border-b border-border pb-3 mb-3">
+                <div className={`flex items-center justify-between ${p.min !== "-" ? "border-b border-border pb-3 mb-3" : "mb-2"}`}>
                   <div className="font-bold text-base">{p.v}</div>
-                  <div className="text-xl font-extrabold text-primary">{p.min}</div>
+                  {p.min !== "-" && <div className="text-xl font-extrabold text-primary">{p.min}</div>}
                 </div>
-                <div className="grid grid-cols-2 gap-y-3 text-sm">
-                  <div>
-                    <div className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">Capacity</div>
-                    <div className="font-semibold">{p.cap}</div>
+                
+                {p.min === "-" ? (
+                  <div className="flex items-center justify-between rounded-xl bg-orange-50/50 border border-orange-100 p-3">
+                    <div>
+                      <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-0.5 font-semibold">Capacity</div>
+                      <div className="text-sm font-bold text-foreground">{p.cap}</div>
+                    </div>
+                    <a href={`tel:${PHONE}`} className="inline-flex items-center gap-1.5 rounded-lg bg-orange-100 px-3 py-1.5 text-xs font-bold text-orange-700 transition hover:bg-orange-200">
+                      <Phone className="h-3.5 w-3.5" /> Call for Price
+                    </a>
                   </div>
-                  <div>
-                    <div className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">Included KM</div>
-                    <div className="font-semibold">{p.km}</div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-y-3 text-sm">
+                    <div>
+                      <div className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">Capacity</div>
+                      <div className="font-semibold">{p.cap}</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">Included KM</div>
+                      <div className="font-semibold">{p.km}</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">Extra KM</div>
+                      <div className="font-semibold">{p.extra === "-" ? "-" : `${p.extra}/km`}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">Extra KM</div>
-                    <div className="font-semibold">{p.extra}/km</div>
-                  </div>
-                </div>
+                )}
               </div>
             ))}
           </div>
@@ -438,7 +451,7 @@ function Pricing() {
                       <td className="px-6 py-5 text-muted-foreground">{p.cap}</td>
                       <td className="px-6 py-5 font-extrabold text-primary">{p.min}</td>
                       <td className="px-6 py-5 text-muted-foreground">{p.km}</td>
-                      <td className="px-6 py-5 font-semibold">{p.extra}/km</td>
+                      <td className="px-6 py-5 font-semibold">{p.extra === "-" ? "-" : `${p.extra}/km`}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -548,7 +561,7 @@ function Coverage() {
         </div>
         <div className="relative">
           <div className="absolute -inset-10 -z-10 rounded-full bg-red-100/40 blur-3xl" />
-          <img src={tnMap} alt="Tamil Nadu coverage map" width={1024} height={1024} loading="lazy" className="mx-auto w-full max-w-md" />
+          <img src={tnMap} alt="Tamil Nadu coverage map" width={1024} height={1024} loading="lazy" className="mx-auto w-full max-w-xl" />
         </div>
       </div>
     </section>
