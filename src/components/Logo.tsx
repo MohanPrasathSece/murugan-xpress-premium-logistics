@@ -1,4 +1,4 @@
-import logoImg from "@/assets/logo.jpeg";
+import logoImg from "@/assets/logo-removebg-preview.png";
 
 export default function Logo({
   size = 44,
@@ -15,9 +15,6 @@ export default function Logo({
         height: size,
         width: "auto",
         objectFit: "contain",
-        // On white/glass nav: multiply blends away the red background
-        // On dark footer: show as-is
-        mixBlendMode: variant === "nav" ? "multiply" : "normal",
       }}
     />
   );
