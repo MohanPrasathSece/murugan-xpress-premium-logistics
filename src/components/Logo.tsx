@@ -1,7 +1,6 @@
 import logoImg from "@/assets/logo-removebg-preview.png";
 
 export default function Logo({
-  size = 44,
   variant = "nav",
 }: {
   size?: number;
@@ -11,11 +10,7 @@ export default function Logo({
     <img
       src={logoImg}
       alt="Murugan Xpress"
-      style={{
-        height: size,
-        width: "auto",
-        objectFit: "contain",
-      }}
+      className={variant === "nav" ? "h-8 sm:h-9 md:h-[44px] w-auto object-contain" : "h-[44px] w-auto object-contain"}
     />
   );
 }
