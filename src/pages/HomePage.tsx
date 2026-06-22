@@ -40,6 +40,7 @@ import {
 import heroFleet from "@/assets/hero-fleet.jpg";
 import aboutDriver from "@/assets/about-driver.jpg";
 import tnMap from "@/assets/tn-map.jpg";
+import newLogo from "@/assets/WhatsApp Image 2026-06-22 at 13.47.32.jpeg";
 import { useReveal, useCountUp } from "@/lib/use-reveal";
 import Logo from "@/components/Logo";
 
@@ -62,6 +63,7 @@ export default function HomePage() {
     <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       <Nav />
       <Hero />
+      <BrandSection />
       <Stats />
       <About />
       <Services />
@@ -197,6 +199,37 @@ function Hero() {
   );
 }
 
+/* ---------- BRAND SECTION ---------- */
+function BrandSection() {
+  const r = useReveal();
+  return (
+    <section className="py-12 bg-white relative z-10">
+      <div className="mx-auto max-w-7xl px-5">
+        <div ref={r} className="reveal flex flex-col md:flex-row items-center justify-between gap-8 rounded-[2rem] border border-border bg-surface p-8 md:p-12 shadow-card hover:shadow-glow transition-shadow">
+          <div className="flex-1 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 rounded-full bg-navy/10 px-3 py-1 mb-4 text-xs font-bold uppercase tracking-wider text-navy">
+              <ShieldCheck className="h-3.5 w-3.5" /> Fast & Reliable
+            </div>
+            <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
+              Your Dedicated <span className="text-primary">Logistics Partner</span>
+            </h2>
+            <p className="mt-3 text-muted-foreground max-w-xl">
+              We are committed to providing safe, fast, and transparent delivery services across all 38 districts of Tamil Nadu. Your goods are handled with the utmost care, every step of the way.
+            </p>
+          </div>
+          <div className="flex-shrink-0 bg-white p-2 rounded-2xl shadow-soft border border-border">
+            <img 
+              src={newLogo} 
+              alt="Murugan Xpress Official Logo" 
+              className="h-28 md:h-40 w-auto object-contain rounded-xl" 
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- STATS ---------- */
 function Stats() {
   const items = [
@@ -206,7 +239,7 @@ function Stats() {
     { n: 1000, suffix: "+", label: "Happy Customers" },
   ];
   return (
-    <section id="stats" className="relative -mt-6 pb-12">
+    <section id="stats" className="relative py-12">
       <div className="mx-auto max-w-7xl px-5">
         <div className="grid grid-cols-2 overflow-hidden rounded-3xl shadow-card md:grid-cols-4">
           {items.map((s, i) => <StatBlock key={i} {...s} index={i} />)}
