@@ -72,7 +72,6 @@ export default function HomePage() {
       <WhyUs />
       <Process />
       <Coverage />
-      <Testimonials />
       <FAQ />
       <Booking />
       <Contact />
@@ -149,7 +148,6 @@ function Hero() {
   return (
     <section id="home" className="relative pt-32 pb-20 lg:pt-40 lg:pb-28">
       <div className="blob animate-blob h-[420px] w-[420px] -left-32 top-24" style={{ background: "radial-gradient(circle, #fca5a5 0%, #dc2626 60%, transparent 70%)" }} />
-      <div className="blob animate-blob h-[360px] w-[360px] right-[-80px] top-10" style={{ animationDelay: "-6s", background: "radial-gradient(circle, #bfdbfe 0%, #1e3a8a 70%, transparent 75%)" }} />
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-white/80 px-3 py-1.5 text-xs font-semibold text-muted-foreground backdrop-blur">
@@ -572,43 +570,6 @@ function Coverage() {
         <div className="relative">
           <div className="absolute -inset-10 -z-10 rounded-full bg-red-100/40 blur-3xl" />
           <img src={tnMap} alt="Tamil Nadu coverage map" width={1024} height={1024} loading="lazy" className="mx-auto w-full max-w-xl" />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------- TESTIMONIALS ---------- */
-const TESTIMONIALS = [
-  { n: "Priya R.", c: "Chennai", t: "Booked a tempo for office shifting at 8 AM - picked up by 9, delivered before lunch. Zero damage." },
-  { n: "Karthik M.", c: "Coimbatore", t: "Most reliable courier for our medical supplies. Same-day delivery, every time. Highly recommend." },
-  { n: "Anitha S.", c: "Madurai", t: "Transparent pricing was the biggest win. The fare matched the quote exactly - no surprises." },
-];
-
-function Testimonials() {
-  return (
-    <section className="section-pad bg-surface">
-      <div className="mx-auto max-w-7xl px-5">
-        <SectionHead eyebrow="Customer Stories" title={<>Loved across <span className="text-gradient-brand">Tamil Nadu.</span></>} />
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {TESTIMONIALS.map((t, i) => {
-            const r = useReveal();
-            return (
-              <div key={t.n} ref={r} className="reveal card-soft p-7" style={{ transitionDelay: `${i * 80}ms` }}>
-                <div className="flex items-center gap-1 text-primary">
-                  {Array.from({ length: 5 }).map((_, k) => <Star key={k} className="h-4 w-4 fill-current" />)}
-                </div>
-                <p className="mt-4 text-sm leading-relaxed">"{t.t}"</p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-primary to-navy text-sm font-extrabold text-white">{t.n[0]}</div>
-                  <div>
-                    <div className="text-sm font-bold">{t.n}</div>
-                    <div className="text-xs text-muted-foreground">{t.c}</div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
         </div>
       </div>
     </section>
