@@ -147,7 +147,7 @@ function FloatingBadge({ icon, title, sub, className = "", style }: { icon: Reac
 function Hero() {
   return (
     <section id="home" className="relative pt-32 pb-20 lg:pt-40 lg:pb-28">
-      <div className="blob animate-blob h-[420px] w-[420px] -left-32 top-24" style={{ background: "radial-gradient(circle, #fca5a5 0%, #dc2626 60%, transparent 70%)" }} />
+      <div className="absolute sm:fixed blob animate-blob h-[250px] w-[250px] sm:h-[500px] sm:w-[500px] -left-16 sm:-left-40 top-12 sm:top-20 opacity-40 sm:opacity-60 blur-[80px] pointer-events-none" style={{ background: "radial-gradient(circle, rgba(239, 68, 68, 0.8) 0%, rgba(220, 38, 38, 0.5) 60%, transparent 70%)" }} />
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-white/80 px-3 py-1.5 text-xs font-semibold text-muted-foreground backdrop-blur">
@@ -744,52 +744,71 @@ function Booking() {
   );
 }
 
-/* ---------- CONTACT ---------- */
-function ContactCard({ icon, title, children }: { icon: ReactNode; title: string; children: ReactNode }) {
-  return (
-    <div className="card-soft p-6 border-t-4 border-t-navy">
-      <span className="grid h-12 w-12 place-items-center rounded-xl bg-navy/10 text-navy">{icon}</span>
-      <h3 className="mt-4 text-sm font-bold uppercase tracking-wider text-navy">{title}</h3>
-      <div className="mt-2 text-base">{children}</div>
-    </div>
-  );
-}
-
 function Contact() {
   const r = useReveal();
   return (
     <section id="contact" className="section-pad">
       <div className="mx-auto max-w-7xl px-5">
         <SectionHead eyebrow="Get In Touch" title={<>Let's move <span className="text-gradient-brand">together.</span></>} desc="Call, message or visit - we're here every day, around the clock." />
-        <div ref={r} className="reveal mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <ContactCard icon={<Phone className="h-5 w-5" />} title="Phone">
-            <a href={`tel:${PHONE}`} className="block font-semibold hover:text-primary">{PHONE}</a>
-            <a href={`tel:${PHONE2}`} className="block font-semibold hover:text-primary">{PHONE2}</a>
-          </ContactCard>
-          <ContactCard icon={<Mail className="h-5 w-5" />} title="Email">
-            <a href={`mailto:${EMAIL}`} className="break-all font-semibold hover:text-primary">{EMAIL}</a>
-          </ContactCard>
-          <ContactCard icon={<MapPin className="h-5 w-5" />} title="Office">
-            Sidco Nagar, Villivakkam<br />Chennai - 600049
-          </ContactCard>
-          <ContactCard icon={<MapPin className="h-5 w-5" />} title="Coverage">
-            All over Tamil Nadu
-          </ContactCard>
-        </div>
-        <div className="mt-8 grid gap-4 rounded-3xl bg-navy p-6 text-white shadow-glow sm:p-10 md:grid-cols-[1fr_auto] md:items-center">
-          <div>
-            <div className="text-sm font-semibold text-red-300">Owner</div>
-            <div className="text-2xl font-extrabold sm:text-3xl">S. Udhaya Kumar, BBA</div>
-            <p className="mt-1 text-sm text-white/80">City to City &amp; Local Delivery Specialist</p>
+        <div ref={r} className="reveal mt-12 flex flex-col gap-8 rounded-3xl bg-navy p-8 text-white shadow-glow sm:p-12 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex-1">
+            <div className="mb-6 flex items-center gap-4">
+              <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white/10 text-white shadow-soft">
+                <Building2 className="h-7 w-7" />
+              </span>
+              <div>
+                <h2 className="text-2xl font-extrabold sm:text-3xl text-white">Murugan Xpress</h2>
+                <div className="text-sm font-semibold text-red-300 mt-1">Premium Logistics Services</div>
+              </div>
+            </div>
+            
+            <div className="mb-8">
+              <div className="text-xs font-semibold text-white/50 uppercase tracking-widest mb-1">Owner</div>
+              <div className="text-xl font-bold">S. Udhaya Kumar, BBA</div>
+              <p className="mt-1 text-sm text-white/80">City to City &amp; Local Delivery Specialist</p>
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-2">
+              <div className="flex items-start gap-3">
+                <Phone className="mt-0.5 h-5 w-5 shrink-0 text-red-300" />
+                <div>
+                  <div className="text-xs font-semibold text-white/50 uppercase tracking-widest mb-1.5">Phone</div>
+                  <a href={`tel:${PHONE}`} className="block text-sm font-semibold hover:text-white/80 transition-colors">{PHONE}</a>
+                  <a href={`tel:${PHONE2}`} className="block text-sm font-semibold mt-0.5 hover:text-white/80 transition-colors">{PHONE2}</a>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Mail className="mt-0.5 h-5 w-5 shrink-0 text-red-300" />
+                <div>
+                  <div className="text-xs font-semibold text-white/50 uppercase tracking-widest mb-1.5">Email</div>
+                  <a href={`mailto:${EMAIL}`} className="block text-sm font-semibold break-all hover:text-white/80 transition-colors">{EMAIL}</a>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-red-300" />
+                <div>
+                  <div className="text-xs font-semibold text-white/50 uppercase tracking-widest mb-1.5">Office</div>
+                  <div className="text-sm font-medium leading-relaxed">Sidco Nagar, Villivakkam<br />Chennai - 600049</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-red-300" />
+                <div>
+                  <div className="text-xs font-semibold text-white/50 uppercase tracking-widest mb-1.5">Coverage</div>
+                  <div className="text-sm font-medium leading-relaxed">All over Tamil Nadu</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <a href={`tel:${PHONE}`} className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white hover:bg-red-700">
+          
+          <div className="flex flex-col gap-3 lg:w-56 lg:shrink-0 border-t border-white/10 pt-8 lg:border-t-0 lg:border-l lg:pl-10 lg:pt-0">
+            <a href={`tel:${PHONE}`} className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-white hover:bg-red-700 w-full shadow-soft transition-colors">
               <Phone className="h-4 w-4" /> Call Now
             </a>
-            <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-white hover:brightness-110">
+            <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-semibold text-white hover:brightness-110 w-full shadow-soft transition-all">
               <MessageCircle className="h-4 w-4" /> WhatsApp
             </a>
-            <a href="https://maps.google.com/?q=Sidco+Nagar+Villivakkam+Chennai" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-5 py-3 text-sm font-semibold text-white hover:bg-white/20">
+            <a href="https://maps.google.com/?q=Sidco+Nagar+Villivakkam+Chennai" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/20 hover:border-white/40 w-full transition-colors">
               <Navigation className="h-4 w-4" /> Directions
             </a>
           </div>
@@ -882,9 +901,9 @@ function ScrollProgress() {
   const [p, setP] = useState(0);
   useEffect(() => {
     const f = () => {
-      const h = document.documentElement;
-      const max = h.scrollHeight - h.clientHeight;
-      setP(max > 0 ? (h.scrollTop / max) * 100 : 0);
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      setP(scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0);
     };
     f();
     window.addEventListener("scroll", f, { passive: true });
