@@ -158,7 +158,7 @@ function Hero() {
             <span className="inline-block h-2 w-2 rounded-full bg-primary animate-pulse" />
             Now serving all 38 districts in Tamil Nadu
           </div>
-          <h1 className="mt-6 text-[2.6rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+          <h1 className="mt-6 text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
             Deliver Across <br className="hidden sm:block" />Tamil&nbsp;Nadu,<br />
             <span className="underline-brand">Fast.</span>{" "}
             <span className="underline-brand">Safe.</span>{" "}
@@ -577,8 +577,8 @@ function FAQ() {
 function Input({ label, required, className = "", ...props }: { label: string; required?: boolean; className?: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className={`block ${className}`}>
-      <span className="mb-1.5 block text-sm font-semibold">{label} {required && <span className="text-primary">*</span>}</span>
-      <input {...props} required={required} className="w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm outline-none transition focus:border-navy focus:ring-4 focus:ring-navy/10" />
+      <span className="mb-1 block text-xs font-semibold text-muted-foreground uppercase tracking-wide">{label}{required && <span className="text-primary ml-0.5">*</span>}</span>
+      <input {...props} required={required} className="w-full rounded-xl border border-border bg-white px-3 py-2 text-sm outline-none transition focus:border-navy focus:ring-2 focus:ring-navy/10" />
     </label>
   );
 }
@@ -586,8 +586,8 @@ function Input({ label, required, className = "", ...props }: { label: string; r
 function Select({ label, required, options, ...props }: { label: string; required?: boolean; options: string[] } & React.SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-sm font-semibold">{label} {required && <span className="text-primary">*</span>}</span>
-      <select {...props} required={required} className="w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm outline-none transition focus:border-navy focus:ring-4 focus:ring-navy/10">
+      <span className="mb-1 block text-xs font-semibold text-muted-foreground uppercase tracking-wide">{label}{required && <span className="text-primary ml-0.5">*</span>}</span>
+      <select {...props} required={required} className="w-full rounded-xl border border-border bg-white px-3 py-2 text-sm outline-none transition focus:border-navy focus:ring-2 focus:ring-navy/10">
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>
     </label>
@@ -596,61 +596,113 @@ function Select({ label, required, options, ...props }: { label: string; require
 
 function BlockTitle({ icon, children }: { icon: ReactNode; children: ReactNode }) {
   return (
-    <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-navy">
-      <span className="grid h-7 w-7 place-items-center rounded-lg bg-navy/10">{icon}</span>
+    <h3 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-navy">
+      <span className="grid h-6 w-6 place-items-center rounded-md bg-navy/10">{icon}</span>
       {children}
     </h3>
   );
 }
 
 function Booking() {
-  const [form, setForm] = useState({ sName: "", sPhone: "", sAddr: "", rName: "", rPhone: "", rAddr: "", goods: "", vehicle: "Bike", weight: "", date: "", time: "", notes: "", pay: "Cash on Delivery" });
-  const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setForm((f) => ({ ...f, [k]: e.target.value }));
-  const buildMsg = () => encodeURIComponent(`*New Shipment Booking — Murugan Xpress*\n\n*Sender*\nName: ${form.sName}\nPhone: ${form.sPhone}\nAddress: ${form.sAddr}\n\n*Receiver*\nName: ${form.rName}\nPhone: ${form.rPhone}\nAddress: ${form.rAddr}\n\n*Shipment*\nGoods: ${form.goods}\nVehicle: ${form.vehicle}\nWeight: ${form.weight}\nPickup: ${form.date} at ${form.time}\nPayment: ${form.pay}\n\nNotes: ${form.notes || "—"}`);
-  const onWhats = (e: React.MouseEvent) => { e.preventDefault(); window.open(`https://wa.me/${WHATSAPP}?text=${buildMsg()}`, "_blank"); };
-  const onSubmit = (e: React.FormEvent) => { e.preventDefault(); window.open(`https://wa.me/${WHATSAPP}?text=${buildMsg()}`, "_blank"); };
+  const [form, setForm] = useState({ sName: "", sPhone: "", sAddr: "", rName: "", rPhone: "", rAddr: "", goods: "", vehicle: "Bike", weight: "", date: "", time: "", pay: "Cash on Delivery" });
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
+  const [errMsg, setErrMsg] = useState("");
+
+  const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  const buildWaMsg = () => encodeURIComponent(`*New Shipment Booking — Murugan Xpress*\n\n*Sender*\nName: ${form.sName}\nPhone: ${form.sPhone}\nAddress: ${form.sAddr}\n\n*Receiver*\nName: ${form.rName}\nPhone: ${form.rPhone}\nAddress: ${form.rAddr}\n\n*Shipment*\nGoods: ${form.goods}\nVehicle: ${form.vehicle}\nWeight: ${form.weight}\nPickup: ${form.date} at ${form.time}\nPayment: ${form.pay}`);
+  const onWhats = (e: React.MouseEvent) => { e.preventDefault(); window.open(`https://wa.me/${WHATSAPP}?text=${buildWaMsg()}`, "_blank"); };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+    setErrMsg("");
+    try {
+      const res = await fetch("/api/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Server error");
+      setStatus("ok");
+      setForm({ sName: "", sPhone: "", sAddr: "", rName: "", rPhone: "", rAddr: "", goods: "", vehicle: "Bike", weight: "", date: "", time: "", pay: "Cash on Delivery" });
+    } catch (err: unknown) {
+      setStatus("error");
+      setErrMsg(err instanceof Error ? err.message : "Something went wrong.");
+    }
+  };
+
   const r = useReveal<HTMLFormElement>();
   return (
     <section id="booking" className="section-pad bg-surface">
-      <div className="mx-auto max-w-6xl px-5">
+      <div className="mx-auto max-w-4xl px-5">
         <SectionHead eyebrow="Book Your Shipment" title={<>Send something <span className="text-gradient-brand">today.</span></>} desc="Fill the form and we'll confirm via WhatsApp or call within minutes." />
-        <form ref={r} onSubmit={onSubmit} className="reveal mt-10 grid gap-5 rounded-3xl border border-border bg-white p-6 shadow-card sm:p-10 border-t-4 border-t-navy">
-          <BlockTitle icon={<MapPin className="h-4 w-4" />}>Sender Details</BlockTitle>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="Sender Name" required value={form.sName} onChange={update("sName")} />
-            <Input label="Sender Phone" required type="tel" value={form.sPhone} onChange={update("sPhone")} />
-            <Input label="Pickup Address" required className="sm:col-span-2" value={form.sAddr} onChange={update("sAddr")} />
-          </div>
-          <div className="my-2 h-px bg-border" />
-          <BlockTitle icon={<Navigation className="h-4 w-4" />}>Receiver Details</BlockTitle>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="Receiver Name" required value={form.rName} onChange={update("rName")} />
-            <Input label="Receiver Phone" required type="tel" value={form.rPhone} onChange={update("rPhone")} />
-            <Input label="Delivery Address" required className="sm:col-span-2" value={form.rAddr} onChange={update("rAddr")} />
-          </div>
-          <div className="my-2 h-px bg-border" />
-          <BlockTitle icon={<Package className="h-4 w-4" />}>Shipment Details</BlockTitle>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="Goods Type" required placeholder="Documents, Furniture, …" value={form.goods} onChange={update("goods")} />
-            <Select label="Vehicle Required" required value={form.vehicle} onChange={update("vehicle")} options={["Bike", "Passenger Auto", "Load Auto", "Tempo", "Mini Van", "Lorry"]} />
-            <Input label="Weight" required placeholder="e.g. 50 kg" value={form.weight} onChange={update("weight")} />
-            <Select label="Payment Method" value={form.pay} onChange={update("pay")} options={["Cash on Delivery", "UPI", "Bank Transfer", "Card"]} />
-            <Input label="Pickup Date" required type="date" value={form.date} onChange={update("date")} />
-            <Input label="Pickup Time" required type="time" value={form.time} onChange={update("time")} />
-          </div>
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-semibold">Special Instructions</span>
-            <textarea value={form.notes} onChange={update("notes")} rows={3} className="w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm outline-none transition focus:border-navy focus:ring-4 focus:ring-navy/10" placeholder="Anything our driver should know" />
-          </label>
-          <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-            <button type="submit" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-semibold">
-              Submit Booking <ArrowRight className="h-4 w-4" />
-            </button>
-            <button type="button" onClick={onWhats} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-7 py-4 text-sm font-semibold text-white shadow-soft transition hover:brightness-110">
-              <MessageCircle className="h-4 w-4" /> Book via WhatsApp
+
+        {status === "ok" ? (
+          <div className="reveal mt-8 rounded-2xl border border-green-200 bg-green-50 p-8 text-center shadow-card">
+            <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-green-100 text-green-600">
+              <CircleCheck className="h-7 w-7" />
+            </div>
+            <h3 className="mt-4 text-lg font-bold text-green-800">Booking received!</h3>
+            <p className="mt-2 text-sm text-green-700">We've sent a confirmation to our team. Expect a call or WhatsApp shortly.</p>
+            <button onClick={() => setStatus("idle")} className="mt-6 inline-flex items-center gap-2 rounded-full bg-green-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-green-700">
+              Book another
             </button>
           </div>
-        </form>
+        ) : (
+          <form ref={r} onSubmit={onSubmit} className="reveal mt-8 rounded-2xl border-t-4 border-t-navy border border-border bg-white p-5 shadow-card sm:p-8">
+
+            {status === "error" && (
+              <div className="mb-4 flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                <ShieldCheck className="h-4 w-4 shrink-0 text-red-500" />
+                {errMsg} — try WhatsApp below as a fallback.
+              </div>
+            )}
+
+            {/* Sender + Receiver side by side */}
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div className="space-y-3">
+                <BlockTitle icon={<MapPin className="h-3.5 w-3.5" />}>Sender</BlockTitle>
+                <Input label="Name" required value={form.sName} onChange={update("sName")} />
+                <Input label="Phone" required type="tel" value={form.sPhone} onChange={update("sPhone")} />
+                <Input label="Pickup Address" required value={form.sAddr} onChange={update("sAddr")} />
+              </div>
+              <div className="space-y-3">
+                <BlockTitle icon={<Navigation className="h-3.5 w-3.5" />}>Receiver</BlockTitle>
+                <Input label="Name" required value={form.rName} onChange={update("rName")} />
+                <Input label="Phone" required type="tel" value={form.rPhone} onChange={update("rPhone")} />
+                <Input label="Delivery Address" required value={form.rAddr} onChange={update("rAddr")} />
+              </div>
+            </div>
+
+            {/* Shipment details */}
+            <div className="mt-5 pt-4 border-t border-border">
+              <BlockTitle icon={<Package className="h-3.5 w-3.5" />}>Shipment</BlockTitle>
+              <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <Input label="Goods Type" required placeholder="Documents…" value={form.goods} onChange={update("goods")} />
+                <Select label="Vehicle" required value={form.vehicle} onChange={update("vehicle")} options={["Bike", "Passenger Auto", "Load Auto", "Tempo", "Mini Van", "Lorry"]} />
+                <Input label="Weight" required placeholder="e.g. 50 kg" value={form.weight} onChange={update("weight")} />
+                <Input label="Pickup Date" required type="date" value={form.date} onChange={update("date")} />
+                <Input label="Pickup Time" required type="time" value={form.time} onChange={update("time")} />
+                <Select label="Payment" value={form.pay} onChange={update("pay")} options={["Cash on Delivery", "UPI", "Bank Transfer", "Card"]} />
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
+              <button type="submit" disabled={status === "sending"} className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed">
+                {status === "sending" ? (
+                  <><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" /> Sending…</>
+                ) : (
+                  <>Submit Booking <ArrowRight className="h-4 w-4" /></>
+                )}
+              </button>
+              <button type="button" onClick={onWhats} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:brightness-110">
+                <MessageCircle className="h-4 w-4" /> Book via WhatsApp
+              </button>
+            </div>
+          </form>
+        )}
       </div>
     </section>
   );
@@ -748,7 +800,11 @@ function Footer() {
       </div>
       <div className="mx-auto mt-6 flex max-w-7xl flex-col items-center justify-between gap-3 border-t border-white/10 px-5 py-6 text-xs text-white/50 sm:flex-row">
         <div>© 2026 Murugan Xpress. All Rights Reserved.</div>
-        <div>Made with <span className="text-primary">♥</span> in India</div>
+        <div className="flex items-center gap-3">
+          <span>Made with <span className="text-primary">♥</span> in India</span>
+          <span className="text-white/20">|</span>
+          <span>Developed by <a href="https://zyradigitals.com" target="_blank" rel="noreferrer" className="text-blue-300 hover:text-white transition-colors">Zyra Digitals</a></span>
+        </div>
       </div>
     </footer>
   );
