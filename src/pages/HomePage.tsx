@@ -41,6 +41,7 @@ import heroFleet from "@/assets/hero-fleet.jpg";
 import aboutDriver from "@/assets/about-driver.jpg";
 import tnMap from "@/assets/tn-map.jpg";
 import { useReveal, useCountUp } from "@/lib/use-reveal";
+import Logo from "@/components/Logo";
 
 const PHONE = "9150474919";
 const PHONE2 = "7449209677";
@@ -94,9 +95,7 @@ function Nav() {
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "nav-glass py-2" : "bg-transparent py-4"}`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5">
         <a href="#home" className="flex items-center gap-2.5">
-          <span className="grid h-10 w-10 place-items-center rounded-xl btn-primary">
-            <Truck className="h-5 w-5" strokeWidth={2.4} />
-          </span>
+          <Logo size={40} />
           <span className="text-lg font-extrabold tracking-tight">
             Murugan <span className="text-navy">X</span><span className="text-primary">press</span>
           </span>
@@ -771,7 +770,7 @@ function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <span className="grid h-10 w-10 place-items-center rounded-xl btn-primary"><Truck className="h-5 w-5" /></span>
+            <Logo size={40} />
             <span className="text-lg font-extrabold">Murugan <span className="text-primary">Xpress</span></span>
           </div>
           <p className="mt-4 text-sm leading-relaxed text-white/60">Tamil Nadu's trusted logistics partner. Fast, safe, on-time delivery across all 38 districts.</p>
