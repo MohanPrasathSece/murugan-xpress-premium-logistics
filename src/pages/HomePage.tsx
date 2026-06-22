@@ -183,18 +183,12 @@ function Hero() {
           <div className="relative mx-auto aspect-square w-full max-w-xl">
             <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-red-100/60 to-transparent" />
             <img src={heroFleet} alt="Murugan Xpress fleet — bike, auto, tempo, van, lorry" width={1024} height={1024} className="relative h-full w-full object-contain" />
-            <FloatingBadge className="left-2 top-10 animate-float" icon={<Bike className="h-4 w-4 text-primary" />} title="Bike Delivery" sub="From ₹60" />
-            <FloatingBadge className="right-0 top-1/3 animate-float" style={{ animationDelay: "-2s" }} icon={<Truck className="h-4 w-4 text-primary" />} title="Same-Day Lorry" sub="Up to 3 Ton" />
-            <FloatingBadge className="left-4 bottom-6 animate-float" style={{ animationDelay: "-4s" }} icon={<ShieldCheck className="h-4 w-4 text-primary" />} title="Safe Handling" sub="100% insured" />
+            <FloatingBadge className="left-0 sm:left-2 top-10 animate-float scale-90 sm:scale-100 origin-left" icon={<Bike className="h-4 w-4 text-primary" />} title="Bike Delivery" sub="From ₹60" />
+            <FloatingBadge className="-right-2 sm:right-0 top-1/3 animate-float scale-90 sm:scale-100 origin-right" style={{ animationDelay: "-2s" }} icon={<Truck className="h-4 w-4 text-primary" />} title="Same-Day Lorry" sub="Up to 3 Ton" />
+            <FloatingBadge className="left-0 sm:left-4 bottom-6 animate-float scale-90 sm:scale-100 origin-left" style={{ animationDelay: "-4s" }} icon={<ShieldCheck className="h-4 w-4 text-primary" />} title="Safe Handling" sub="100% insured" />
           </div>
         </div>
       </div>
-      <a href="#stats" className="mx-auto mt-12 hidden w-fit flex-col items-center gap-2 text-xs font-medium text-muted-foreground sm:flex">
-        <span className="grid h-9 w-6 place-items-start rounded-full border border-muted-foreground/40 p-1">
-          <span className="h-2 w-1 rounded-full bg-primary animate-scroll-hint" />
-        </span>
-        Scroll to Explore
-      </a>
     </section>
   );
 }
@@ -203,9 +197,9 @@ function Hero() {
 function BrandSection() {
   const r = useReveal();
   return (
-    <section className="py-12 bg-white relative z-10">
+    <section className="py-8 md:py-12 bg-white relative z-10">
       <div className="mx-auto max-w-7xl px-5">
-        <div ref={r} className="reveal flex flex-col md:flex-row items-center justify-between gap-8 rounded-[2rem] border border-border bg-surface p-8 md:p-12 shadow-card hover:shadow-glow transition-shadow">
+        <div ref={r} className="reveal flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 rounded-[2rem] border border-border bg-surface p-6 md:p-12 shadow-card hover:shadow-glow transition-shadow">
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-2 rounded-full bg-navy/10 px-3 py-1 mb-4 text-xs font-bold uppercase tracking-wider text-navy">
               <ShieldCheck className="h-3.5 w-3.5" /> Fast & Reliable
@@ -253,7 +247,7 @@ function StatBlock({ n, suffix, label, index }: { n: number; suffix: string; lab
   const { ref, val } = useCountUp(n);
   const bg = index % 2 === 0 ? "bg-navy" : "bg-navy-deep";
   return (
-    <div className={`${bg} flex flex-col items-center justify-center gap-1 px-6 py-8 md:items-start`}>
+    <div className={`${bg} flex flex-col items-center justify-center gap-1 px-4 py-6 sm:px-6 sm:py-8 md:items-start`}>
       <div className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
         <span ref={ref}>{`${val}${suffix}`}</span>
       </div>
@@ -769,7 +763,7 @@ function Contact() {
             All over Tamil Nadu
           </ContactCard>
         </div>
-        <div className="mt-8 grid gap-4 rounded-3xl bg-navy p-8 text-white shadow-glow sm:p-10 md:grid-cols-[1fr_auto] md:items-center">
+        <div className="mt-8 grid gap-4 rounded-3xl bg-navy p-6 text-white shadow-glow sm:p-10 md:grid-cols-[1fr_auto] md:items-center">
           <div>
             <div className="text-sm font-semibold text-red-300">Owner</div>
             <div className="text-2xl font-extrabold sm:text-3xl">S. Udhaya Kumar, BBA</div>
@@ -797,7 +791,7 @@ function Footer() {
   return (
     <footer className="relative bg-navy-deep text-white">
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary to-red-400" />
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-4">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 md:py-16 md:grid-cols-4">
         <div>
           <div className="flex items-center">
             <Logo size={44} variant="footer" />
@@ -829,8 +823,6 @@ function Footer() {
       <div className="mx-auto mt-6 flex max-w-7xl flex-col items-center justify-between gap-3 border-t border-white/10 px-5 py-6 text-xs text-white/50 sm:flex-row">
         <div>© 2026 Murugan Xpress. All Rights Reserved.</div>
         <div className="flex items-center gap-3">
-          <span>Made with <span className="text-primary">♥</span> in India</span>
-          <span className="text-white/20">|</span>
           <span>Developed by <a href="https://zyradigitals.com" target="_blank" rel="noreferrer" className="text-blue-300 hover:text-white transition-colors">Zyra Digitals</a></span>
         </div>
       </div>
