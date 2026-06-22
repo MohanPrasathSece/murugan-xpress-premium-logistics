@@ -182,7 +182,7 @@ function Hero() {
         <div className="relative">
           <div className="relative mx-auto aspect-square w-full max-w-xl">
             <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-red-100/60 to-transparent" />
-            <img src={heroFleet} alt="Murugan Xpress fleet — bike, auto, tempo, van, lorry" width={1024} height={1024} className="relative h-full w-full object-contain" />
+            <img src={heroFleet} alt="Murugan Xpress fleet - bike, auto, tempo, van, lorry" width={1024} height={1024} className="relative h-full w-full object-contain" />
             <FloatingBadge className="left-0 sm:left-2 top-10 animate-float scale-90 sm:scale-100 origin-left" icon={<Bike className="h-4 w-4 text-primary" />} title="Bike Delivery" sub="From ₹60" />
             <FloatingBadge className="-right-2 sm:right-0 top-1/3 animate-float scale-90 sm:scale-100 origin-right" style={{ animationDelay: "-2s" }} icon={<Truck className="h-4 w-4 text-primary" />} title="Same-Day Lorry" sub="Up to 3 Ton" />
             <FloatingBadge className="left-0 sm:left-4 bottom-6 animate-float scale-90 sm:scale-100 origin-left" style={{ animationDelay: "-4s" }} icon={<ShieldCheck className="h-4 w-4 text-primary" />} title="Safe Handling" sub="100% insured" />
@@ -325,7 +325,7 @@ function Services() {
   return (
     <section id="services" className="section-pad bg-surface">
       <div className="mx-auto max-w-7xl px-5">
-        <SectionHead eyebrow="Our Services" title={<>Every load, <span className="text-gradient-brand">every vehicle.</span></>} desc="From a single envelope to a 3-ton lorry — pick the right vehicle and we'll handle the rest." />
+        <SectionHead eyebrow="Our Services" title={<>Every load, <span className="text-gradient-brand">every vehicle.</span></>} desc="From a single envelope to a 3-ton lorry - pick the right vehicle and we'll handle the rest." />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s, i) => <ServiceCard key={s.name} {...s} delay={i * 60} />)}
         </div>
@@ -352,7 +352,7 @@ function Categories() {
   return (
     <section className="section-pad">
       <div className="mx-auto max-w-7xl px-5">
-        <SectionHead eyebrow="We Deliver" title={<>Anything you need <span className="text-gradient-brand">moved.</span></>} desc="Big or small, fragile or heavy — we've handled it all." />
+        <SectionHead eyebrow="We Deliver" title={<>Anything you need <span className="text-gradient-brand">moved.</span></>} desc="Big or small, fragile or heavy - we've handled it all." />
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
           {CATS.map(({ icon: I, label }, i) => {
             const r = useReveal();
@@ -391,30 +391,59 @@ function Pricing() {
           <ShieldCheck className="h-5 w-5 shrink-0 text-red-300" />
           <p>Rate does not include toll charges. Applicable toll charges will be added to the final fare.</p>
         </div>
-        <div className="mt-6 overflow-hidden rounded-3xl border border-border bg-white shadow-card">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="sticky top-0 bg-navy text-xs uppercase tracking-wider text-white">
-                <tr>
-                  <th className="px-6 py-4 font-semibold">Vehicle</th>
-                  <th className="px-6 py-4 font-semibold">Capacity</th>
-                  <th className="px-6 py-4 font-semibold">Min. Charge</th>
-                  <th className="px-6 py-4 font-semibold">Included KM</th>
-                  <th className="px-6 py-4 font-semibold">Extra KM</th>
-                </tr>
-              </thead>
-              <tbody>
-                {PRICING.map((p, i) => (
-                  <tr key={p.v} className={`border-t border-border transition-colors hover:bg-red-50 ${i % 2 ? "bg-slate-50/60" : ""}`}>
-                    <td className="px-6 py-5 font-bold">{p.v}</td>
-                    <td className="px-6 py-5 text-muted-foreground">{p.cap}</td>
-                    <td className="px-6 py-5 font-extrabold text-primary">{p.min}</td>
-                    <td className="px-6 py-5 text-muted-foreground">{p.km}</td>
-                    <td className="px-6 py-5 font-semibold">{p.extra}/km</td>
+        <div className="mt-6">
+          {/* Mobile Cards (Visible only on small screens) */}
+          <div className="grid gap-4 md:hidden">
+            {PRICING.map((p, i) => (
+              <div key={p.v} className="rounded-2xl border border-border bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
+                <div className="flex items-center justify-between border-b border-border pb-3 mb-3">
+                  <div className="font-bold text-base">{p.v}</div>
+                  <div className="text-xl font-extrabold text-primary">{p.min}</div>
+                </div>
+                <div className="grid grid-cols-2 gap-y-3 text-sm">
+                  <div>
+                    <div className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">Capacity</div>
+                    <div className="font-semibold">{p.cap}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">Included KM</div>
+                    <div className="font-semibold">{p.km}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">Extra KM</div>
+                    <div className="font-semibold">{p.extra}/km</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop Table (Visible on medium screens and up) */}
+          <div className="hidden md:block overflow-hidden rounded-3xl border border-border bg-white shadow-card">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead className="sticky top-0 bg-navy text-xs uppercase tracking-wider text-white">
+                  <tr>
+                    <th className="px-6 py-4 font-semibold">Vehicle</th>
+                    <th className="px-6 py-4 font-semibold">Capacity</th>
+                    <th className="px-6 py-4 font-semibold">Min. Charge</th>
+                    <th className="px-6 py-4 font-semibold">Included KM</th>
+                    <th className="px-6 py-4 font-semibold">Extra KM</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {PRICING.map((p, i) => (
+                    <tr key={p.v} className={`border-t border-border transition-colors hover:bg-red-50 ${i % 2 ? "bg-slate-50/60" : ""}`}>
+                      <td className="px-6 py-5 font-bold">{p.v}</td>
+                      <td className="px-6 py-5 text-muted-foreground">{p.cap}</td>
+                      <td className="px-6 py-5 font-extrabold text-primary">{p.min}</td>
+                      <td className="px-6 py-5 text-muted-foreground">{p.km}</td>
+                      <td className="px-6 py-5 font-semibold">{p.extra}/km</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div className="mt-8 text-center">
@@ -429,7 +458,7 @@ function Pricing() {
 
 /* ---------- WHY US ---------- */
 const WHY = [
-  { icon: Boxes, t: "Large Parcel Delivery", d: "From small envelopes to 3-ton lorry loads — one partner, every size." },
+  { icon: Boxes, t: "Large Parcel Delivery", d: "From small envelopes to 3-ton lorry loads - one partner, every size." },
   { icon: Wallet, t: "Affordable Pricing", d: "Honest minimums and clear per-km rates. No hidden surcharges." },
   { icon: Home, t: "Door Pickup & Delivery", d: "We pick up from your doorstep and drop at the receiver's door." },
   { icon: ShieldCheck, t: "Safe Handling", d: "Trained loaders, secure tie-downs and careful packing protocols." },
@@ -506,7 +535,7 @@ function Coverage() {
             Serving every district <br />across <span className="text-gradient-brand">Tamil Nadu.</span>
           </h2>
           <p className="mt-5 text-muted-foreground">
-            From Chennai to Kanyakumari, Coimbatore to Cuddalore — Murugan Xpress moves your goods wherever you need them.
+            From Chennai to Kanyakumari, Coimbatore to Cuddalore - Murugan Xpress moves your goods wherever you need them.
           </p>
           <ul className="mt-6 space-y-3 text-sm">
             {[{ i: Navigation, t: "Fast Local Delivery" }, { i: RouteIcon, t: "City-to-City Delivery" }, { i: Building2, t: "Business Logistics" }, { i: Home, t: "Household Shifting" }].map(({ i: I, t }) => (
@@ -528,9 +557,9 @@ function Coverage() {
 
 /* ---------- TESTIMONIALS ---------- */
 const TESTIMONIALS = [
-  { n: "Priya R.", c: "Chennai", t: "Booked a tempo for office shifting at 8 AM — picked up by 9, delivered before lunch. Zero damage." },
+  { n: "Priya R.", c: "Chennai", t: "Booked a tempo for office shifting at 8 AM - picked up by 9, delivered before lunch. Zero damage." },
   { n: "Karthik M.", c: "Coimbatore", t: "Most reliable courier for our medical supplies. Same-day delivery, every time. Highly recommend." },
-  { n: "Anitha S.", c: "Madurai", t: "Transparent pricing was the biggest win. The fare matched the quote exactly — no surprises." },
+  { n: "Anitha S.", c: "Madurai", t: "Transparent pricing was the biggest win. The fare matched the quote exactly - no surprises." },
 ];
 
 function Testimonials() {
@@ -567,12 +596,12 @@ function Testimonials() {
 const FAQS = [
   { q: "What areas do you serve?", a: "We cover all 38 districts of Tamil Nadu, including local deliveries and city-to-city routes." },
   { q: "How do I book a shipment?", a: "Fill the booking form on this page, send it via WhatsApp, or call 9150474919 directly." },
-  { q: "Do you offer same-day delivery?", a: "Yes — same-day delivery is available for most routes when booked early in the day." },
+  { q: "Do you offer same-day delivery?", a: "Yes - same-day delivery is available for most routes when booked early in the day." },
   { q: "Can I transport furniture or large items?", a: "Absolutely. We have tempos, mini vans and lorries equipped for furniture and bulky goods." },
   { q: "Are toll charges included in the price?", a: "No. Applicable toll charges are added to the final fare on top of the published rates." },
   { q: "Can I track my shipments?", a: "Yes. Our team shares live status updates via WhatsApp and call throughout the journey." },
   { q: "What payment methods are accepted?", a: "We accept cash, UPI, bank transfer and major digital wallets." },
-  { q: "What vehicles are available?", a: "Bike, passenger auto, load auto, tempo, mini van and lorry — covering 20 kg to 3 tons." },
+  { q: "What vehicles are available?", a: "Bike, passenger auto, load auto, tempo, mini van and lorry - covering 20 kg to 3 tons." },
 ];
 
 function FAQ() {
@@ -633,7 +662,7 @@ function Booking() {
 
   const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
-  const buildWaMsg = () => encodeURIComponent(`*New Shipment Booking — Murugan Xpress*\n\n*Sender*\nName: ${form.sName}\nPhone: ${form.sPhone}\nAddress: ${form.sAddr}\n\n*Receiver*\nName: ${form.rName}\nPhone: ${form.rPhone}\nAddress: ${form.rAddr}\n\n*Shipment*\nGoods: ${form.goods}\nVehicle: ${form.vehicle}\nWeight: ${form.weight}\nPickup: ${form.date} at ${form.time}\nPayment: ${form.pay}`);
+  const buildWaMsg = () => encodeURIComponent(`*New Shipment Booking - Murugan Xpress*\n\n*Sender*\nName: ${form.sName}\nPhone: ${form.sPhone}\nAddress: ${form.sAddr}\n\n*Receiver*\nName: ${form.rName}\nPhone: ${form.rPhone}\nAddress: ${form.rAddr}\n\n*Shipment*\nGoods: ${form.goods}\nVehicle: ${form.vehicle}\nWeight: ${form.weight}\nPickup: ${form.date} at ${form.time}\nPayment: ${form.pay}`);
   const onWhats = (e: React.MouseEvent) => { e.preventDefault(); window.open(`https://wa.me/${WHATSAPP}?text=${buildWaMsg()}`, "_blank"); };
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -679,7 +708,7 @@ function Booking() {
             {status === "error" && (
               <div className="mb-4 flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                 <ShieldCheck className="h-4 w-4 shrink-0 text-red-500" />
-                {errMsg} — try WhatsApp below as a fallback.
+                {errMsg} - try WhatsApp below as a fallback.
               </div>
             )}
 
@@ -747,7 +776,7 @@ function Contact() {
   return (
     <section id="contact" className="section-pad">
       <div className="mx-auto max-w-7xl px-5">
-        <SectionHead eyebrow="Get In Touch" title={<>Let's move <span className="text-gradient-brand">together.</span></>} desc="Call, message or visit — we're here every day, around the clock." />
+        <SectionHead eyebrow="Get In Touch" title={<>Let's move <span className="text-gradient-brand">together.</span></>} desc="Call, message or visit - we're here every day, around the clock." />
         <div ref={r} className="reveal mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <ContactCard icon={<Phone className="h-5 w-5" />} title="Phone">
             <a href={`tel:${PHONE}`} className="block font-semibold hover:text-primary">{PHONE}</a>
